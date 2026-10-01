@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "PianoInputActions",
+    "maps": [
+        {
+            "name": "Default",
+            "id": "54623da4-f2e5-4019-b398-c4653be2af61",
+            "actions": [
+                {
+                    "name": "PlayAction",
+                    "type": "Button",
+                    "id": "cbbf54c0-420b-4038-8a41-48b54db92822",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4181174a-07ae-489b-a6e4-e4b1672e78d8",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlayAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
