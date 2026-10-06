@@ -1,12 +1,10 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Questions", menuName = "Scriptable Objects/Questions")]
-public class Questions : ScriptableObject
+public abstract class Questions : ScriptableObject
 {
-    public int stage;
+    public int phase;
     public int step;
-    public string questionText;
-    public string questionTitle;
-    public bool complete = false;
-    public float correctAnswer;
+    public string prompt;
+    public questionTypes type;
 }
