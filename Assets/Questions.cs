@@ -6,5 +6,5 @@ public abstract class Questions : ScriptableObject
     public int phase;
     public int step;
     public string prompt;
-    public questionTypes type;
+    public QuestionTypes.questionTypes type;
 }
