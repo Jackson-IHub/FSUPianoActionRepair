@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 515802645774655701}
   - component: {fileID: 5831490164923096279}
-  - component: {fileID: 5475907325237041489}
+  - component: {fileID: 869588030221203013}
   m_Layer: 0
   m_Name: ToolSocket
   m_TagString: Untagged
@@ -86,7 +86,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.0075
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5475907325237041489
+--- !u!114 &869588030221203013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,42 +95,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 3507284965022219559}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60523e0647cc6ab43acc73cb266a32a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 374b1524f349f604eb402f5a98d213f2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactors.XRSocketInteractor
-  m_InteractionManager: {fileID: 0}
-  m_InteractionLayers:
-    m_Bits: 4294967295
-  m_Handedness: 0
-  m_AttachTransform: {fileID: 8290324214009448147}
-  m_KeepSelectedTargetValid: 1
-  m_DisableVisualsWhenBlockedInGroup: 1
-  m_StartingSelectedInteractable: {fileID: 0}
-  m_StartingTargetFilter: {fileID: 0}
-  m_AutoFindParentInteractableInHierarchy: 0
-  m_ParentInteractableObject: {fileID: 0}
-  m_HoverEntered:
+  m_EditorClassIdentifier: Assembly-CSharp::CustomSocket
+  snapPoint: {fileID: 8290324214009448147}
+  acceptedToolType: 
+  alignRotation: 1
+  ghostMaterial: {fileID: 2100000, guid: 57705c9244b2b2b4087fc936795f2cb0, type: 2}
+  ghostColor: {r: 0.3, g: 0.8, b: 1, a: 0.35}
+  toolAttached:
     m_PersistentCalls:
       m_Calls: []
-  m_HoverExited:
+  toolDetached:
     m_PersistentCalls:
       m_Calls: []
-  m_SelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
-  m_ShowInteractableHoverMeshes: 1
-  m_InteractableHoverMeshMaterial: {fileID: 0}
-  m_InteractableCantHoverMeshMaterial: {fileID: 0}
-  m_SocketActive: 1
-  m_InteractableHoverScale: 1
-  m_RecycleDelayTime: 1
-  m_HoverSocketSnapping: 0
-  m_SocketSnappingRadius: 0.1
-  m_SocketScaleMode: 0
-  m_FixedScale: {x: 1, y: 1, z: 1}
-  m_TargetBoundsSize: {x: 1, y: 1, z: 1}
