@@ -498,6 +498,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolName
+      value: Balancier Tool
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolDescription
+      value: tool description
+      objectReference: {fileID: 0}
     - target: {fileID: 4153303723550924139, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: m_Height
       value: 0.08
@@ -1151,6 +1159,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolName
+      value: Slotted Screwdriver
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolDescription
+      value: tool description
+      objectReference: {fileID: 0}
     - target: {fileID: 4153303723550924139, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: m_Height
       value: 0.08
@@ -1651,6 +1667,14 @@ PrefabInstance:
     - target: {fileID: 2169630569551260842, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolName
+      value: Backcheck Wire Bender
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolDescription
+      value: tool description
       objectReference: {fileID: 0}
     - target: {fileID: 4153303723550924139, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: m_Height
@@ -2345,6 +2369,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolName
+      value: Drop Screwdriver
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolDescription
+      value: tool description
+      objectReference: {fileID: 0}
     - target: {fileID: 4153303723550924139, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: m_Height
       value: 0.08
@@ -2446,6 +2478,14 @@ PrefabInstance:
     - target: {fileID: 2169630569551260842, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolName
+      value: Capstan Regulator
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolDescription
+      value: tool description
       objectReference: {fileID: 0}
     - target: {fileID: 4153303723550924139, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: m_Height
@@ -2939,6 +2979,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolName
+      value: Letoff Tool
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolDescription
+      value: tool description
+      objectReference: {fileID: 0}
     - target: {fileID: 4153303723550924139, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: m_Height
       value: 0.08
@@ -3088,6 +3136,14 @@ PrefabInstance:
     - target: {fileID: 1827350891600563834, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: m_Name
       value: PaperPunchings
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolName
+      value: Paper Punchings
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolDescription
+      value: delicious (allegedly)
       objectReference: {fileID: 0}
     - target: {fileID: 4153303723550924139, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: m_Height
