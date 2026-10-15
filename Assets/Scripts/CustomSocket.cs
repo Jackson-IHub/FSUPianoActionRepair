@@ -138,21 +138,32 @@ public class CustomSocket : MonoBehaviour
         ghostRoot = new GameObject($"{tool.name}_SnapGhost");
         ghostRoot.transform.localScale = tool.transform.lossyScale;
 
+        // Mirror the tool's hierarchy (local TRS per node) so every mesh ends up with exactly
+        // the same pose relative to the root as the original, without decomposing matrices.
+        var map = new Dictionary<Transform, Transform> { { tool.transform, ghostRoot.transform } };
+
+        Transform GetOrCreate(Transform src)
+        {
+            if (map.TryGetValue(src, out var existing)) return existing;
+
+            var go = new GameObject(src.name);
+            go.transform.SetParent(GetOrCreate(src.parent), false);
+            go.transform.localPosition = src.localPosition;
+            go.transform.localRotation = src.localRotation;
+            go.transform.localScale = src.localScale;
+            map[src] = go.transform;
+            return go.transform;
+        }
+
         foreach (var mf in tool.GhostMeshes)
         {
             if (mf == null || mf.sharedMesh == null) continue;
+            if (!mf.transform.IsChildOf(tool.transform)) continue; // must live under the tool root
 
-            var child = new GameObject(mf.name);
-            child.transform.SetParent(ghostRoot.transform, false);
+            var node = GetOrCreate(mf.transform);
 
-            // Pose of this mesh relative to the tool root, so the ghost matches the tool's shape.
-            Matrix4x4 rel = tool.transform.worldToLocalMatrix * mf.transform.localToWorldMatrix;
-            child.transform.localPosition = rel.GetColumn(3);
-            child.transform.localRotation = rel.rotation;
-            child.transform.localScale = rel.lossyScale;
-
-            child.AddComponent<MeshFilter>().sharedMesh = mf.sharedMesh;
-            var mr = child.AddComponent<MeshRenderer>();
+            node.gameObject.AddComponent<MeshFilter>().sharedMesh = mf.sharedMesh;
+            var mr = node.gameObject.AddComponent<MeshRenderer>();
             var mats = new Material[mf.sharedMesh.subMeshCount];
             for (int i = 0; i < mats.Length; i++) mats[i] = mat;
             mr.sharedMaterials = mats;
