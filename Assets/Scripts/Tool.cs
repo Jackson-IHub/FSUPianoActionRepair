@@ -43,4 +43,9 @@ public class Tool : MonoBehaviour
     {
         isGrabbed = false;
     }
+
+    public bool IsAtReturnPosition()
+    {
+        return Vector3.Distance(transform.position, returnPosition) < 0.01f;
+    }
 }
