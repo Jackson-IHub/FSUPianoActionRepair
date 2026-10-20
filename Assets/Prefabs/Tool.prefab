@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec90db9f3ec7fb74497781c3d5e4545c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tool
-  returnDuration: 0.5
+  returnDuration: 0.75
   rb: {fileID: 3511168841089784860}
 --- !u!114 &8394033240927680514
 MonoBehaviour:
@@ -409,6 +409,8 @@ MonoBehaviour:
   tooltipCanvas: {fileID: 6346402935801800408}
   nameLabel: {fileID: 188787006887700043}
   descriptionLabel: {fileID: 6971305531299824588}
+  fadeInDuration: 0.25
+  fadeOutDuration: 0.25
 --- !u!1 &2489885462009865348
 GameObject:
   m_ObjectHideFlags: 0
