@@ -3,9 +3,6 @@ using UnityEngine.Events;
 
 public class Tool : MonoBehaviour
 {
-
-    [SerializeField] private ToolType.toolType toolType;
-
     [SerializeField] private float returnDuration = 0.5f;
 
     [SerializeField] private Rigidbody rb;
@@ -45,6 +42,11 @@ public class Tool : MonoBehaviour
     public void OnReleased()
     {
         isGrabbed = false;
+    }
+
+    public bool IsAtReturnPosition()
+    {
+        return Vector3.Distance(transform.position, returnPosition) < 0.01f;
     }
 
     public ToolType.toolType getToolType()
