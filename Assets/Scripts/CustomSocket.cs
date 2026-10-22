@@ -6,8 +6,8 @@ using UnityEngine.Events;
 /// <summary>
 /// Put this on the screw (or any socket) together with a TRIGGER collider that defines the snap radius.
 /// When a held SnapTool's tip collider overlaps that trigger, a transparent ghost of the tool is shown
-/// at the snapped pose. Releasing the grip while the ghost is showing snaps the tool into place.
-/// Grabbing the tool again detaches it.
+/// at the snapped pose. Releasing the grip while the ghost is showing smoothly moves the tool from
+/// where it was released into the snapped pose. Grabbing the tool again detaches it (even mid-transition).
 /// </summary>
 [RequireComponent(typeof(Collider))]
 public class CustomSocket : MonoBehaviour
@@ -20,6 +20,12 @@ public class CustomSocket : MonoBehaviour
     [Tooltip("If off, only the position is snapped and the tool keeps its rotation.")]
     [SerializeField] bool alignRotation = true;
 
+    [Header("Snap transition")]
+    [Tooltip("Seconds it takes the tool to glide from where it was released into the socket. 0 = instant.")]
+    [SerializeField, Min(0f)] float snapDuration = 0.2f;
+    [Tooltip("Easing over the transition (X = normalized time 0..1, Y = progress 0..1).")]
+    [SerializeField] AnimationCurve snapCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+
     [Header("Ghost preview")]
     [Tooltip("A transparent material. If empty, a basic fallback tinted with Ghost Color is used.")]
     [SerializeField] Material ghostMaterial;
@@ -31,14 +37,18 @@ public class CustomSocket : MonoBehaviour
 
     readonly List<SocketTool> candidates = new List<SocketTool>();
     SocketTool hovered;   // tool whose ghost is currently shown
-    SocketTool attached;  // tool that is snapped (or about to be)
-    bool snapped;       // true once the attach pose has actually been applied
+    SocketTool attached;  // tool that is snapped (or gliding into place)
+    bool snapped;         // true once the transition has finished and the tool is locked to the socket
+    bool constraintsSaved;
     RigidbodyConstraints savedConstraints;
+    Coroutine attachRoutine;
     GameObject ghostRoot;
     Material runtimeGhostMaterial;
 
     public Transform SnapPoint => snapPoint != null ? snapPoint : transform;
     public SocketTool AttachedTool => attached;
+    /// <summary>True while the tool is still gliding into the socket.</summary>
+    public bool IsTransitioning => attached != null && !snapped;
 
     void Reset()
     {
@@ -112,6 +122,7 @@ public class CustomSocket : MonoBehaviour
     void LateUpdate()
     {
         // Keep the tool locked to the socket (in case the screw itself moves).
+        // While transitioning, the coroutine drives the pose instead.
         if (snapped && attached != null) ApplyPose(attached);
     }
 
@@ -203,7 +214,7 @@ public class CustomSocket : MonoBehaviour
 
         attached = tool;
         tool.CurrentSocket = this;
-        StartCoroutine(AttachRoutine(tool));
+        attachRoutine = StartCoroutine(AttachRoutine(tool));
     }
 
     IEnumerator AttachRoutine(SocketTool tool)
@@ -217,6 +228,7 @@ public class CustomSocket : MonoBehaviour
             // Player re-grabbed it before we finished.
             if (attached == tool) attached = null;
             if (tool != null && tool.CurrentSocket == this) tool.CurrentSocket = null;
+            attachRoutine = null;
             yield break;
         }
 
@@ -230,11 +242,40 @@ public class CustomSocket : MonoBehaviour
         // Freeze rather than parent/set kinematic: XRGrabInteractable remembers kinematic state and
         // the original parent when grabbed, and would restore the wrong ones when released again.
         savedConstraints = body.constraints;
+        constraintsSaved = true;
         body.constraints = RigidbodyConstraints.FreezeAll;
+
+        // Subscribe now so grabbing the tool mid-transition cancels the snap.
+        tool.Grabbed += OnAttachedToolGrabbed;
+
+        // Glide from the release pose to the socket pose. The target is re-evaluated every frame
+        // so the tool still ends up exactly right if the socket (screw) is moving.
+        if (snapDuration > 0f)
+        {
+            Vector3 startPos = tool.transform.position;
+            Quaternion startRot = tool.transform.rotation;
+            float elapsed = 0f;
+
+            while (elapsed < snapDuration)
+            {
+                if (attached != tool) { attachRoutine = null; yield break; } // detached mid-glide
+
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / snapDuration);
+                float k = snapCurve != null ? snapCurve.Evaluate(t) : t;
+
+                GetSnapPose(tool, out var targetPos, out var targetRot);
+                SetPose(tool, Vector3.LerpUnclamped(startPos, targetPos, k),
+                              Quaternion.SlerpUnclamped(startRot, targetRot, k));
+                yield return null;
+            }
+
+            if (attached != tool) { attachRoutine = null; yield break; }
+        }
 
         ApplyPose(tool);
         snapped = true;
-        tool.Grabbed += OnAttachedToolGrabbed;
+        attachRoutine = null;
         toolAttached.Invoke(tool);
     }
 
@@ -248,8 +289,15 @@ public class CustomSocket : MonoBehaviour
         var tool = attached;
         if (tool == null) return;
 
+        if (attachRoutine != null)
+        {
+            StopCoroutine(attachRoutine);
+            attachRoutine = null;
+        }
+
         tool.Grabbed -= OnAttachedToolGrabbed;
-        if (snapped && tool.Body != null) tool.Body.constraints = savedConstraints;
+        if (constraintsSaved && tool.Body != null) tool.Body.constraints = savedConstraints;
+        constraintsSaved = false;
         if (tool.CurrentSocket == this) tool.CurrentSocket = null;
 
         attached = null;
@@ -276,6 +324,11 @@ public class CustomSocket : MonoBehaviour
     void ApplyPose(SocketTool tool)
     {
         GetSnapPose(tool, out var pos, out var rot);
+        SetPose(tool, pos, rot);
+    }
+
+    void SetPose(SocketTool tool, Vector3 pos, Quaternion rot)
+    {
         tool.transform.SetPositionAndRotation(pos, rot);
         tool.Body.position = pos;
         tool.Body.rotation = rot;
