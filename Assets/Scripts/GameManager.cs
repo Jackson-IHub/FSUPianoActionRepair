@@ -1,190 +1,148 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
-// Note: Removed NUnit and UnityEditor to prevent build compilation errors.
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private List<Questions> questions;
-    [SerializeField] private List<GameObject> thorbs;
-    [SerializeField] private GameObject player;
 
-    // Connect this to your hand script that tracks the grabbed object
-    [SerializeField] private GetGrabbedObject toolGetter;
-
-    private bool gameStarted = false;
     private int currentStep = 0;
     private int currentPhase = 0;
 
     private Questions currentQuestion;
-    public object currentAnswer;
-
-    // References updated via the toolGetter
-    private GameObject selectedTool;
-    private ToolType.toolType selectedToolType; // Assumes your ToolType enum has a 'None' or 'Unknown' default option
-    private GameObject selectedThorb;
-    private GameObject selectedToolLocation;
     private float selectedMeasurement;
 
-    void Start()
-    {
-        // Initialize game state or call startGame() here if needed
-    }
-
-    void Update()
-    {
-        // 1. Cleanly update what the player is holding using your toolGetter script
-        if (toolGetter != null && toolGetter.holdingTool)
-        {
-            // Safely fetch the current grabbed object from your hand tracker
-            selectedTool = toolGetter.grabbedObject;
-
-            if (selectedTool != null && selectedTool.GetComponent<Tool>() != null)
-            {
-                selectedToolType = selectedTool.GetComponent<Tool>().getToolType();
-            }
-        }
-        else
-        {
-            selectedTool = null;
-            selectedToolType = ToolType.toolType.None; // Set to your enum's default fallback value
-        }
-
-        // 2. Process what needs evaluation based on the question type
-        if (currentQuestion == null) return;
-
-        if (currentQuestion.type == QuestionTypes.questionTypes.toolQuestion)
-        {
-            if (selectedTool != null)
-            {
-                // Optional: Extract location logic from the held tool if necessary
-                // selectedToolLocation = selectedTool.GetComponent<Tooltip>()?.gameObject;
-            }
-        }
-        else if (currentQuestion.type == QuestionTypes.questionTypes.actionLocationQuestion)
-        {
-            // If they need to grab a specific object (Thorb), check if the grabbed tool is it
-            selectedThorb = selectedTool;
-        }
-        else if (currentQuestion.type == QuestionTypes.questionTypes.measurementQuestion)
-        {
-            // UI reading logic goes here
-        }
-    }
-
-    public void nextQuestion()
-    {
-        int nextStep = currentStep + 1;
-
-        foreach (Questions question in questions)
-        {
-            if (currentPhase == question.phase &&
-                nextStep == question.step)
-            {
-                currentStep = nextStep;
-                currentQuestion = question;
-
-                Debug.Log($"Moved to Phase: {currentQuestion.phase} | Step: {currentQuestion.step}");
-                return;
-            }
-        }
-
-        currentQuestion = null;
-        Debug.Log("No more questions found for this phase.");
-    }
-    public void startGame()
-    {
-        currentStep = 1;
-        currentPhase = 1;
-        gameStarted = true;
-
-        // Load your first question matching phase 1, step 1
-        foreach (Questions question in questions)
-        {
-            if (question.phase == 1 && question.step == 1)
-            {
-                currentQuestion = question;
-                break;
-            }
-        }
-        Debug.Log("Game Started");
-    }
-
-    public void checkAnswer(Thorb activatedThorb = null, SocketTool insertedTool = null)
-    {
-        if (currentQuestion == null) return;
-
-        if (currentQuestion.type == QuestionTypes.questionTypes.toolQuestion)
-        {
-            ToolQuestion currentToolQuestion = (ToolQuestion)currentQuestion;
-
-            GameObject toolObject = insertedTool != null
-                ? insertedTool.gameObject
-                : selectedTool;
-
-            GameObject toolLocation = activatedThorb != null
-                ? activatedThorb.gameObject
-                : selectedToolLocation;
-
-            if (currentToolQuestion.correctAnswer == toolObject &&
-                currentToolQuestion.correctArea == toolLocation)
-            {
-                nextQuestion();
-            }
-            else
-            {
-                Debug.Log("Wrong Tool or Location!");
-            }
-        }
-        else if (currentQuestion.type == QuestionTypes.questionTypes.measurementQuestion)
-        {
-            MeasurementQuestion currentMeasurementQuestion = (MeasurementQuestion)currentQuestion;
-
-            if (Mathf.Approximately(currentMeasurementQuestion.correctAnswer, selectedMeasurement))
-            {
-                nextQuestion();
-            }
-            else
-            {
-                Debug.Log("Wrong Measurement!");
-            }
-        }
-        else if (currentQuestion.type == QuestionTypes.questionTypes.actionLocationQuestion)
-        {
-            ModelQuestion currentModelQuestion = (ModelQuestion)currentQuestion;
-
-            GameObject selectedObject = activatedThorb != null
-                ? activatedThorb.gameObject
-                : selectedThorb;
-
-            if (currentModelQuestion.correctAnswer == selectedObject)
-            {
-                nextQuestion();
-            }
-            else
-            {
-                Debug.Log("Wrong Object Selected!");
-            }
-        }
-    }
     private void OnEnable()
     {
-        Thorb.OnThorbActivated += HandleThorbActivated;
+        Thorb.OnToolInsertedIntoThorb += HandleToolInserted;
     }
 
     private void OnDisable()
     {
-        Thorb.OnThorbActivated -= HandleThorbActivated;
+        Thorb.OnToolInsertedIntoThorb -= HandleToolInserted;
     }
 
-    private void HandleThorbActivated(Thorb thorb, SocketTool tool)
+    public void StartGame()
     {
-        if (thorb == null || tool == null) return;
+        currentStep = 1;
+        currentPhase = 1;
+        currentQuestion = FindQuestion(currentStep, currentPhase);
 
-        Debug.Log($"Thorb activated: {thorb.name}");
-        Debug.Log($"Tool inserted: {tool.name}");
+        if (currentQuestion != null)
+            Debug.Log("Game Started: Step 1 | Phase 1");
+        else
+            Debug.LogError("Could not find the first question.");
+    }
 
-        checkAnswer(thorb, tool);
+    private Questions FindQuestion(int step, int phase)
+    {
+        return questions.Find(q => q.step == step && q.phase == phase);
+    }
+
+    public void NextQuestion()
+    {
+        int nextStep = currentStep;
+        int nextPhase = currentPhase + 1;
+
+        if (nextPhase > 3)
+        {
+            nextPhase = 1;
+            nextStep++;
+        }
+
+        Questions next = FindQuestion(nextStep, nextPhase);
+
+        if (next == null)
+        {
+            currentQuestion = null;
+            Debug.Log("All questions completed!");
+            return;
+        }
+
+        currentStep = nextStep;
+        currentPhase = nextPhase;
+        currentQuestion = next;
+
+        Debug.Log($"Moved to Step: {currentStep} | Phase: {currentPhase}");
+    }
+
+    private void HandleToolInserted(Thorb thorb, SocketTool socketTool)
+    {
+        CheckAnswer(thorb, socketTool);
+    }
+
+    public void CheckAnswer(Thorb thorb = null, SocketTool socketTool = null)
+    {
+        if (currentQuestion == null) return;
+
+        if (currentQuestion.type == QuestionTypes.questionTypes.toolQuestion ||
+            currentQuestion.type == QuestionTypes.questionTypes.actionLocationQuestion)
+        {
+            if (thorb == null || socketTool == null)
+            {
+                Debug.LogWarning("Missing Thorb or inserted tool.");
+                return;
+            }
+
+            Tool tool = socketTool.GetComponent<Tool>();
+
+            if (tool == null)
+            {
+                Debug.LogError($"No Tool component found on {socketTool.name}.");
+                return;
+            }
+
+            ToolType.toolType actualToolType = tool.getToolType();
+            int actualLocationID = thorb.ID;
+
+            bool correct;
+
+            if (currentQuestion.type == QuestionTypes.questionTypes.toolQuestion)
+            {
+                ToolQuestion question = (ToolQuestion)currentQuestion;
+
+                correct = question.correctTool == actualToolType &&
+                          question.correctArea == actualLocationID;
+            }
+            else
+            {
+                ModelQuestion question = (ModelQuestion)currentQuestion;
+
+                correct = question.correctTool == actualToolType &&
+                          question.correctArea == actualLocationID;
+            }
+
+            if (correct)
+            {
+                Debug.Log("Correct tool and location!");
+                NextQuestion();
+            }
+            else
+            {
+                Debug.Log($"Wrong answer! Tool: {actualToolType}, Location: {actualLocationID}");
+            }
+        }
+        else if (currentQuestion.type == QuestionTypes.questionTypes.measurementQuestion)
+        {
+            MeasurementQuestion question = (MeasurementQuestion)currentQuestion;
+
+            if (Mathf.Approximately(question.correctAnswer, selectedMeasurement))
+                NextQuestion();
+            else
+                Debug.Log("Wrong Measurement!");
+        }
+    }
+
+    // Call this from your measurement system when a reading is submitted.
+    public void SetSelectedMeasurement(float measurement)
+    {
+        selectedMeasurement = measurement;
+    }
+
+    private void Start()
+    {
+        StartGame();   
     }
 }
