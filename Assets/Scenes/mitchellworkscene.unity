@@ -1320,6 +1320,8 @@ GameObject:
   - component: {fileID: 1085154059}
   - component: {fileID: 1085154058}
   - component: {fileID: 1085154057}
+  - component: {fileID: 1085154062}
+  - component: {fileID: 1085154061}
   m_Layer: 0
   m_Name: Thorb
   m_TagString: Untagged
@@ -1420,6 +1422,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1085154061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085154056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36178dbd17d7dbd459f6c1b055930e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Thorb
+--- !u!114 &1085154062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085154056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 374b1524f349f604eb402f5a98d213f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CustomSocket
+  snapPoint: {fileID: 0}
+  acceptedToolType: 
+  alignRotation: 1
+  ghostMaterial: {fileID: 0}
+  ghostColor: {r: 0.3, g: 0.8, b: 1, a: 0.35}
+  toolAttached:
+    m_PersistentCalls:
+      m_Calls: []
+  toolDetached:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1098161813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1741,6 +1778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6dfd43b14b65c46958bad573f5baa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GetGrabbedObject
+  holdingTool: 0
 --- !u!114 &1098161817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1753,6 +1791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6dfd43b14b65c46958bad573f5baa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GetGrabbedObject
+  holdingTool: 0
 --- !u!4 &1099413332 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8403528352394766831, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}

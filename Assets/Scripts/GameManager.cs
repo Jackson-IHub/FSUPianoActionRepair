@@ -7,6 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private List<Questions> questions;
+    [SerializeField] private List<GameObject> thorbs;
     [SerializeField] private GameObject player;
 
     // Connect this to your hand script that tracks the grabbed object
@@ -74,25 +75,24 @@ public class GameManager : MonoBehaviour
 
     public void nextQuestion()
     {
-        // Adjusted logic to advance steps normally, or handle phase thresholds cleanly
-        ++currentStep;
+        int nextStep = currentStep + 1;
 
-        // Search your list for the question matching the new step/phase
         foreach (Questions question in questions)
         {
-            if (currentPhase == question.phase && currentStep == question.step)
+            if (currentPhase == question.phase &&
+                nextStep == question.step)
             {
+                currentStep = nextStep;
                 currentQuestion = question;
-                break; // Found it, stop searching
+
+                Debug.Log($"Moved to Phase: {currentQuestion.phase} | Step: {currentQuestion.step}");
+                return;
             }
         }
 
-        if (currentQuestion != null)
-        {
-            Debug.Log("Moved to Phase: " + currentQuestion.phase + " | Step: " + currentQuestion.step);
-        }
+        currentQuestion = null;
+        Debug.Log("No more questions found for this phase.");
     }
-
     public void startGame()
     {
         currentStep = 1;
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Started");
     }
 
-    public void checkAnswer()
+    public void checkAnswer(Thorb activatedThorb = null, SocketTool insertedTool = null)
     {
         if (currentQuestion == null) return;
 
@@ -119,7 +119,16 @@ public class GameManager : MonoBehaviour
         {
             ToolQuestion currentToolQuestion = (ToolQuestion)currentQuestion;
 
-            if (currentToolQuestion.correctAnswer == selectedTool && currentToolQuestion.correctArea == selectedToolLocation)
+            GameObject toolObject = insertedTool != null
+                ? insertedTool.gameObject
+                : selectedTool;
+
+            GameObject toolLocation = activatedThorb != null
+                ? activatedThorb.gameObject
+                : selectedToolLocation;
+
+            if (currentToolQuestion.correctAnswer == toolObject &&
+                currentToolQuestion.correctArea == toolLocation)
             {
                 nextQuestion();
             }
@@ -145,7 +154,11 @@ public class GameManager : MonoBehaviour
         {
             ModelQuestion currentModelQuestion = (ModelQuestion)currentQuestion;
 
-            if (currentModelQuestion.correctAnswer == selectedThorb)
+            GameObject selectedObject = activatedThorb != null
+                ? activatedThorb.gameObject
+                : selectedThorb;
+
+            if (currentModelQuestion.correctAnswer == selectedObject)
             {
                 nextQuestion();
             }
@@ -154,5 +167,24 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Wrong Object Selected!");
             }
         }
+    }
+    private void OnEnable()
+    {
+        Thorb.OnThorbActivated += HandleThorbActivated;
+    }
+
+    private void OnDisable()
+    {
+        Thorb.OnThorbActivated -= HandleThorbActivated;
+    }
+
+    private void HandleThorbActivated(Thorb thorb, SocketTool tool)
+    {
+        if (thorb == null || tool == null) return;
+
+        Debug.Log($"Thorb activated: {thorb.name}");
+        Debug.Log($"Tool inserted: {tool.name}");
+
+        checkAnswer(thorb, tool);
     }
 }

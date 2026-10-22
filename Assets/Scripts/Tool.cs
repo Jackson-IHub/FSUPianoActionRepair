@@ -6,7 +6,8 @@ public class Tool : MonoBehaviour
     [SerializeField] private float returnDuration = 0.5f;
 
     [SerializeField] private Rigidbody rb;
-    
+
+    [SerializeField] private ToolType.toolType toolType;
     private Vector3 returnPosition;
     private Quaternion returnRotation;
 
