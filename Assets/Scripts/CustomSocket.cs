@@ -35,6 +35,9 @@ public class CustomSocket : MonoBehaviour
     public UnityEvent<SocketTool> toolAttached;
     public UnityEvent<SocketTool> toolDetached;
 
+    [Header("Indicator")]
+    [SerializeField] GameObject indicatorSphere;
+
     readonly List<SocketTool> candidates = new List<SocketTool>();
     SocketTool hovered;   // tool whose ghost is currently shown
     SocketTool attached;  // tool that is snapped (or gliding into place)
@@ -59,6 +62,10 @@ public class CustomSocket : MonoBehaviour
     {
         if (!GetComponent<Collider>().isTrigger)
             Debug.LogWarning($"{name}: TipSocket's collider should be a trigger.", this);
+
+        // Set size of indicator sphere to the size of the collider
+        var collider = GetComponent<SphereCollider>();
+        indicatorSphere.transform.localScale = Vector3.one * collider.radius * 2f;
     }
 
     void OnDisable()
@@ -332,6 +339,11 @@ public class CustomSocket : MonoBehaviour
         tool.transform.SetPositionAndRotation(pos, rot);
         tool.Body.position = pos;
         tool.Body.rotation = rot;
+    }
+
+    public void SetIndicatorSphereVisible(bool visible)
+    {
+        if (indicatorSphere != null) indicatorSphere.SetActive(visible);
     }
 
     void OnDrawGizmosSelected()
