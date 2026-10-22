@@ -6,7 +6,8 @@ public class Tool : MonoBehaviour
     [SerializeField] private float returnDuration = 0.5f;
 
     [SerializeField] private Rigidbody rb;
-    
+
+    [SerializeField] private ToolType.toolType toolType;
     private Vector3 returnPosition;
     private Quaternion returnRotation;
 
@@ -47,5 +48,10 @@ public class Tool : MonoBehaviour
     public bool IsAtReturnPosition()
     {
         return Vector3.Distance(transform.position, returnPosition) < 0.01f;
+    }
+
+    public ToolType.toolType getToolType()
+    {
+        return toolType;
     }
 }
