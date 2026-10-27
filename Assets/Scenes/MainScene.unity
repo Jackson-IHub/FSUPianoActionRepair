@@ -3022,6 +3022,7 @@ MonoBehaviour:
   questions:
   - {fileID: 11400000, guid: 4db659ac9fdba8a42b0dbcd691e065de, type: 2}
   - {fileID: 11400000, guid: cc38faf5de53b2a438718ab999a0ad3e, type: 2}
+  currentQuestion: {fileID: 0}
 --- !u!4 &1415597913
 Transform:
   m_ObjectHideFlags: 0
@@ -4922,6 +4923,10 @@ PrefabInstance:
     - target: {fileID: 3826918171293133437, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4071078040815228807, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
+      propertyPath: toolType
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4153303723550924139, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: m_Height

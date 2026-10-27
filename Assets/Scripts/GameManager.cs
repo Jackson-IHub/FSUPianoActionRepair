@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     public Questions currentQuestion;
     private float selectedMeasurement;
 
+    public static event Action OnCheckAnswer;
     private void OnEnable()
     {
         Thorb.OnToolInsertedIntoThorb += HandleToolInserted;
@@ -75,7 +77,8 @@ public class GameManager : MonoBehaviour
 
     public void CheckAnswer(Thorb thorb = null, SocketTool socketTool = null)
     {
-        Debug.Log(socketTool.name);
+        OnCheckAnswer?.Invoke();
+
         if (currentQuestion == null) return;
 
         if (currentQuestion.type == QuestionTypes.questionTypes.toolQuestion ||
