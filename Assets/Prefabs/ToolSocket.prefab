@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomSocket
   snapPoint: {fileID: 8290324214009448147}
-  acceptedToolType: 
+  acceptedToolType: tool
   alignRotation: 1
   snapDuration: 0.2
   snapCurve:
