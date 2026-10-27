@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cff766b38685a0f4d8950f0aff9681ad, type: 3}
   m_Name: S1P1
   m_EditorClassIdentifier: Assembly-CSharp::ToolQuestion
-  phase: 0
-  step: 0
-  prompt: 
-  type: 0
-  correctTool: 0
-  correctArea: 0
+  phase: 1
+  step: 1
+  prompt: Put the punchings under the key
+  type: 2
+  correctTool: 6
+  correctArea: 1

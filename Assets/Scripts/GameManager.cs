@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private int currentStep = 0;
     private int currentPhase = 0;
 
-    private Questions currentQuestion;
+    public Questions currentQuestion;
     private float selectedMeasurement;
 
     private void OnEnable()
@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
 
     public void CheckAnswer(Thorb thorb = null, SocketTool socketTool = null)
     {
+        Debug.Log(socketTool.name);
         if (currentQuestion == null) return;
 
         if (currentQuestion.type == QuestionTypes.questionTypes.toolQuestion ||
