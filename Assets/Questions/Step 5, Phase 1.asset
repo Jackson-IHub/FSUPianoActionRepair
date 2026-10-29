@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d97dc4c65dfaf84c8fdf911a65c183b, type: 3}
-  m_Name: S1P2
+  m_Name: Step 5, Phase 1
   m_EditorClassIdentifier: Assembly-CSharp::ModelQuestion
-  phase: 2
+  phase: 1
   step: 1
-  prompt: Put the calipers at the same spot
+  prompt: Take the calipers and place them where you need to measure to complete
+    step 5 of piano regulation
   type: 1
   correctTool: 1
   correctArea: 1

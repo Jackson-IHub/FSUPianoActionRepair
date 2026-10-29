@@ -6,10 +6,12 @@ public class ToolType
     {
         None,
         Calipers,
-        Tool1,
-        Tool2,
-        Tool3,
-        Tool4,
-        Tool5
+        PaperPunchings,
+        Balancier,
+        Letoff,
+        DropScrewdriver,
+        BackcheckWireBender,
+        SlottedScrewdriver,
+        CapstanRegulator
     }
 }
