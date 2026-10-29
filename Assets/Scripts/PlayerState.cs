@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerState : MonoBehaviour
 {
     private int heldToolCount = 0;
+    private bool isHoldingCaliper = false;
 
     public bool IsHoldingTool()
     {
@@ -17,5 +18,15 @@ public class PlayerState : MonoBehaviour
     public void DecrementHeldToolCount()
     {
         heldToolCount = Mathf.Max(0, heldToolCount - 1);
+    }
+
+    public bool IsHoldingCaliper()
+    {
+        return isHoldingCaliper;
+    }
+
+    public void SetHoldingCaliper(bool holding)
+    {
+        isHoldingCaliper = holding;
     }
 }

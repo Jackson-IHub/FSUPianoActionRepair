@@ -1,8 +1,15 @@
+using System;
 using UnityEngine;
 
 public class ToolSocketIndicatorHandler : MonoBehaviour
 {
+    public enum HoldCheck
+    {
+        Tool, Caliper
+    }
+
     [SerializeField] private PlayerState playerState;
+    [SerializeField] private HoldCheck holdCheck = HoldCheck.Tool;
 
     [Header("Tool Indicators")]
     [SerializeField] Material indicatorMaterial;
@@ -29,7 +36,7 @@ public class ToolSocketIndicatorHandler : MonoBehaviour
 
     void Update()
     {
-        bool isHolding = playerState.IsHoldingTool();
+        bool isHolding = IsHolding();
 
         // Turn children on as soon as the player grabs a tool,
         // so there is something to fade in.
@@ -57,6 +64,16 @@ public class ToolSocketIndicatorHandler : MonoBehaviour
     {
         // Avoid leaving the shared material asset modified after leaving play mode.
         SetAlpha(0.25f);
+    }
+
+    bool IsHolding()
+    {
+        return holdCheck switch
+        {
+            HoldCheck.Tool => playerState.IsHoldingTool(),
+            HoldCheck.Caliper => playerState.IsHoldingCaliper(),
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 
     void SetIndicatorsVisible(bool visible)

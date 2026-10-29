@@ -374,6 +374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tool
   returnDuration: 0.75
   rb: {fileID: 3511168841089784860}
+  toolType: 0
 --- !u!114 &8394033240927680514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,7 +389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SnapTool
   tipCollider: {fileID: 7459499710851198100}
   snapPoint: {fileID: 7506728834372522103}
-  toolType: 
+  toolType: tool
   ghostMeshes: []
 --- !u!114 &2512155341531555371
 MonoBehaviour:
