@@ -26,6 +26,8 @@ public class MeasurementSlider : MonoBehaviour
         slider.maxValue = upper;
         this.increment = increment;
 
+        slider.value = (lower + upper) / 2f; // Set to midpoint
+
         OnSliderValueChanged(slider.value);
     }
 
