@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
@@ -11,11 +12,12 @@ public class GameManager : MonoBehaviour
 
     private int currentStep = 0;
     private int currentPhase = 0;
+    public bool currentQuestionAnsweredIncorrectly = false;
 
     public Questions currentQuestion;
     private float selectedMeasurement;
 
-    public static event Action OnCheckAnswer;
+    public UnityEvent OnCheckAnswer;
     private void OnEnable()
     {
         Thorb.OnToolInsertedIntoThorb += HandleToolInserted;
@@ -26,6 +28,10 @@ public class GameManager : MonoBehaviour
         Thorb.OnToolInsertedIntoThorb -= HandleToolInserted;
     }
 
+    private void Awake()
+    {
+        StartGame();
+    }
     public void StartGame()
     {
         currentStep = 1;
@@ -68,6 +74,7 @@ public class GameManager : MonoBehaviour
         currentQuestion = next;
 
         Debug.Log($"Moved to Step: {currentStep} | Phase: {currentPhase}");
+        currentQuestionAnsweredIncorrectly = false;
     }
 
     private void HandleToolInserted(Thorb thorb, SocketTool socketTool)
@@ -77,7 +84,6 @@ public class GameManager : MonoBehaviour
 
     public void CheckAnswer(Thorb thorb = null, SocketTool socketTool = null)
     {
-        OnCheckAnswer?.Invoke();
 
         if (currentQuestion == null) return;
 
@@ -87,6 +93,8 @@ public class GameManager : MonoBehaviour
             if (thorb == null || socketTool == null)
             {
                 Debug.LogWarning("Missing Thorb or inserted tool.");
+                currentQuestionAnsweredIncorrectly = true;
+                OnCheckAnswer?.Invoke();
                 return;
             }
 
@@ -95,7 +103,9 @@ public class GameManager : MonoBehaviour
             if (tool == null)
             {
                 Debug.LogError($"No Tool component found on {socketTool.name}.");
-                return;
+                currentQuestionAnsweredIncorrectly = true;
+                OnCheckAnswer?.Invoke();
+                return; 
             }
 
             ToolType.toolType actualToolType = tool.getToolType();
@@ -122,10 +132,12 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Correct tool and location!");
                 NextQuestion();
+                currentQuestionAnsweredIncorrectly = false;
             }
             else
             {
                 Debug.Log($"Wrong answer! Tool: {actualToolType}, Location: {actualLocationID}");
+                currentQuestionAnsweredIncorrectly = true;
             }
         }
         else if (currentQuestion.type == QuestionTypes.questionTypes.measurementQuestion)
@@ -136,7 +148,10 @@ public class GameManager : MonoBehaviour
                 NextQuestion();
             else
                 Debug.Log("Wrong Measurement!");
+                currentQuestionAnsweredIncorrectly = true;
         }
+
+        OnCheckAnswer?.Invoke();
     }
 
     // Call this from your measurement system when a reading is submitted.
