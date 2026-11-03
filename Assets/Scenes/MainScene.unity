@@ -3140,7 +3140,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1415597912}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: SetSelectedMeasurement
-        m_Mode: 4
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5045,7 +5045,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 03efa000ef8aa164fb5a890ce194dda6, type: 2}
   MeasurementSliderPanel: {fileID: 1703544238}
   measurementSlider: {fileID: 1905455358}
-  measurementButton: {fileID: 0}
+  measurementButton: {fileID: 800885621}
+  finalPlaceholderQuestion: {fileID: 11400000, guid: 8b0593afea506bd4c99e268ac1f43daa, type: 2}
   currentQuestionAnsweredIncorrectly: 0
   currentQuestion: {fileID: 0}
   OnCheckAnswer:
