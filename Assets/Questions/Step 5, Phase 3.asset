@@ -17,3 +17,6 @@ MonoBehaviour:
   prompt: 'What is the correct measurement for the key depth (mm)? '
   type: 0
   correctAnswer: 10
+  minimumBounds: 0
+  maximumBounds: 20
+  sliderIncrement: 2

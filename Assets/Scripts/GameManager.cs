@@ -3,19 +3,26 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private List<Questions> questions;
+    [SerializeField] private GameObject MeasurementSliderPanel;
+    [SerializeField] private MeasurementSlider measurementSlider;
+    [SerializeField] private GameObject measurementButton;
+
+    [SerializeField] private Questions finalPlaceholderQuestion;
 
     private int currentStep = 0;
     private int currentPhase = 0;
+    public bool currentQuestionAnsweredIncorrectly = false;
 
     public Questions currentQuestion;
     private float selectedMeasurement;
 
-    public static event Action OnCheckAnswer;
+    public UnityEvent OnCheckAnswer;
     private void OnEnable()
     {
         Thorb.OnToolInsertedIntoThorb += HandleToolInserted;
@@ -26,6 +33,10 @@ public class GameManager : MonoBehaviour
         Thorb.OnToolInsertedIntoThorb -= HandleToolInserted;
     }
 
+    private void Awake()
+    {
+        StartGame();
+    }
     public void StartGame()
     {
         currentStep = 1;
@@ -58,16 +69,33 @@ public class GameManager : MonoBehaviour
 
         if (next == null)
         {
-            currentQuestion = null;
+            currentQuestion = finalPlaceholderQuestion;
             Debug.Log("All questions completed!");
             return;
         }
-
-        currentStep = nextStep;
-        currentPhase = nextPhase;
-        currentQuestion = next;
+        else 
+        {
+            currentStep = nextStep;
+            currentPhase = nextPhase;
+            currentQuestion = next;
+        }
+            
 
         Debug.Log($"Moved to Step: {currentStep} | Phase: {currentPhase}");
+        if (currentQuestion.type == QuestionTypes.questionTypes.measurementQuestion)
+        {
+            MeasurementQuestion question = (MeasurementQuestion)currentQuestion;
+            MeasurementSliderPanel.SetActive(true);
+            measurementButton.SetActive(true);
+            measurementSlider.setBounds(question.minimumBounds, question.maximumBounds, question.sliderIncrement);
+        }
+        else 
+        {
+            MeasurementSliderPanel.SetActive(false);
+            measurementButton.SetActive(false);
+        }
+        currentQuestionAnsweredIncorrectly = false;
+        
     }
 
     private void HandleToolInserted(Thorb thorb, SocketTool socketTool)
@@ -77,7 +105,7 @@ public class GameManager : MonoBehaviour
 
     public void CheckAnswer(Thorb thorb = null, SocketTool socketTool = null)
     {
-        OnCheckAnswer?.Invoke();
+
 
         if (currentQuestion == null) return;
 
@@ -87,6 +115,8 @@ public class GameManager : MonoBehaviour
             if (thorb == null || socketTool == null)
             {
                 Debug.LogWarning("Missing Thorb or inserted tool.");
+                currentQuestionAnsweredIncorrectly = true;
+                OnCheckAnswer?.Invoke();
                 return;
             }
 
@@ -95,7 +125,9 @@ public class GameManager : MonoBehaviour
             if (tool == null)
             {
                 Debug.LogError($"No Tool component found on {socketTool.name}.");
-                return;
+                currentQuestionAnsweredIncorrectly = true;
+                OnCheckAnswer?.Invoke();
+                return; 
             }
 
             ToolType.toolType actualToolType = tool.getToolType();
@@ -122,10 +154,12 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Correct tool and location!");
                 NextQuestion();
+                currentQuestionAnsweredIncorrectly = false;
             }
             else
             {
                 Debug.Log($"Wrong answer! Tool: {actualToolType}, Location: {actualLocationID}");
+                currentQuestionAnsweredIncorrectly = true;
             }
         }
         else if (currentQuestion.type == QuestionTypes.questionTypes.measurementQuestion)
@@ -135,14 +169,22 @@ public class GameManager : MonoBehaviour
             if (Mathf.Approximately(question.correctAnswer, selectedMeasurement))
                 NextQuestion();
             else
-                Debug.Log("Wrong Measurement!");
+                Debug.Log($"Wrong Measurement!: {selectedMeasurement}");
+                currentQuestionAnsweredIncorrectly = true;
         }
+
+        OnCheckAnswer?.Invoke();
     }
 
-    // Call this from your measurement system when a reading is submitted.
-    public void SetSelectedMeasurement(float measurement)
+    public void CheckAnswerWrapper()
     {
-        selectedMeasurement = measurement;
+        CheckAnswer();
+        Debug.Log("Im doing something");
+    }
+    // Call this from your measurement system when a reading is submitted.
+    public void SetSelectedMeasurement()
+    {
+        selectedMeasurement = measurementSlider.getValue();
     }
 
     private void Start()

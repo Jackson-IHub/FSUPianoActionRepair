@@ -1,17 +1,31 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class QuestionPanel : MonoBehaviour
 {
     [SerializeField] private GameManager Manager;
 
-    public TextMeshProUGUI question, title; 
+    public TextMeshProUGUI question, title;
 
-    private void Update()
+    private void Start()
     {
-        //change to event system later
-        title.text = Manager.currentQuestion.name;
-        question.text = Manager.currentQuestion.prompt;
+        Manager.OnCheckAnswer.AddListener(UpdateQuestionPanel);
+        UpdateQuestionPanel();
+    }
+
+    private void UpdateQuestionPanel()
+    {
+        if (Manager.currentQuestionAnsweredIncorrectly)
+        {
+            title.text = Manager.currentQuestion.name + "  INCORRECT: PLEASE TRY AGAIN";
+            question.text = Manager.currentQuestion.prompt;
+        }
+        else
+        {
+            title.text = Manager.currentQuestion.name;
+            question.text = Manager.currentQuestion.prompt;
+        }
     }
 
 }
