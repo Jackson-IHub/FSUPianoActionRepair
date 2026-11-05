@@ -18,8 +18,8 @@ public class QuestionPanel : MonoBehaviour
     {
         if (Manager.currentQuestionAnsweredIncorrectly)
         {
-            title.text = Manager.currentQuestion.name + "  INCORRECT: PLEASE TRY AGAIN";
-            question.text = Manager.currentQuestion.prompt;
+            title.text = Manager.currentQuestion.name;
+            question.text = "  INCORRECT: PLEASE TRY AGAIN" + Manager.currentQuestion.prompt + "  INCORRECT: PLEASE TRY AGAIN";
         }
         else
         {
