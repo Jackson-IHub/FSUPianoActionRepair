@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 892c2997d17783242a28797fd887e9dc, type: 3}
-  m_Name: Step 13, Phase 3
+  m_Name: Regulate Hammer Drop, Phase 3
   m_EditorClassIdentifier: Assembly-CSharp::MeasurementQuestion
   phase: 3
-  step: 4
-  prompt: 
+  step: 6
+  prompt: How far from the string should the hammer rest after it drops?
   type: 0
-  correctAnswer: 0
+  correctAnswer: 3
   minimumBounds: 0
-  maximumBounds: 0
-  sliderIncrement: 0
+  maximumBounds: 10
+  sliderIncrement: 1

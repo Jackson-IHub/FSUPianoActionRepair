@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 892c2997d17783242a28797fd887e9dc, type: 3}
-  m_Name: Step 15, Phase 3
+  m_Name: Regulate Hammer Height, Phase 3
   m_EditorClassIdentifier: Assembly-CSharp::MeasurementQuestion
-  phase: 0
-  step: 6
-  prompt: 
+  phase: 3
+  step: 3
+  prompt: What is the correct distance between the hammer and the string?
   type: 0
-  correctAnswer: 0
-  minimumBounds: 0
-  maximumBounds: 0
-  sliderIncrement: 0
+  correctAnswer: 45
+  minimumBounds: 10
+  maximumBounds: 60
+  sliderIncrement: 5

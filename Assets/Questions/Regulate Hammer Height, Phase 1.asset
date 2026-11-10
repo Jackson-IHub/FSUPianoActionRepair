@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d97dc4c65dfaf84c8fdf911a65c183b, type: 3}
-  m_Name: Step 12, Phase 1
+  m_Name: Regulate Hammer Height, Phase 1
   m_EditorClassIdentifier: Assembly-CSharp::ModelQuestion
   phase: 1
   step: 3
-  prompt: Take the calipers, amd place them where you need to measure to complete
+  prompt: Take the calipers, and place them where you need to measure to complete
     step 12.
   type: 1
   correctTool: 1
-  correctArea: 0
+  correctArea: 12

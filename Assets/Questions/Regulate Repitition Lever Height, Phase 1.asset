@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d97dc4c65dfaf84c8fdf911a65c183b, type: 3}
-  m_Name: Step 13, Phase 1
+  m_Name: Regulate Repitition Lever Height, Phase 1
   m_EditorClassIdentifier: Assembly-CSharp::ModelQuestion
   phase: 1
-  step: 4
-  prompt: Place the calipers where you must measure to complete step 13.
-  type: 0
+  step: 2
+  prompt: Take the calipers to the spot on the model where you check the "paper thickness"
+    gap to complete step 11 of piano regulation.
+  type: 1
   correctTool: 1
-  correctArea: 0
+  correctArea: 6

@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 892c2997d17783242a28797fd887e9dc, type: 3}
-  m_Name: Step 14, Phase 3
+  m_Name: Regulate Repitition Lever Height, Phase 3
   m_EditorClassIdentifier: Assembly-CSharp::MeasurementQuestion
-  phase: 0
-  step: 5
-  prompt: 
+  phase: 3
+  step: 2
+  prompt: What is the correct size of the gap between the jack top and the hammer
+    knuckle?
   type: 0
-  correctAnswer: 0
+  correctAnswer: 0.1
   minimumBounds: 0
-  maximumBounds: 0
-  sliderIncrement: 0
+  maximumBounds: 2
+  sliderIncrement: 0.1
