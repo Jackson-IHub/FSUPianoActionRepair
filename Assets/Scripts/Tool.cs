@@ -1,18 +1,24 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Tool : MonoBehaviour
 {
     [SerializeField] private float returnDuration = 0.5f;
+    [SerializeField] private AnimationCurve returnCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
     [SerializeField] private Rigidbody rb;
 
     [SerializeField] private ToolType.toolType toolType;
+
     private Vector3 returnPosition;
     private Quaternion returnRotation;
 
-    private bool isGrabbed = false;
-    private float returnTimer = 0;
+    // Pose captured at the moment of release; the return lerps from here.
+    private Vector3 startPosition;
+    private Quaternion startRotation;
+
+    private bool isReturning = false;
+    private float returnTimer = 0f;
+    private bool wasKinematic;
 
     void Start()
     {
@@ -22,27 +28,51 @@ public class Tool : MonoBehaviour
 
     void Update()
     {
-        returnTimer = Mathf.MoveTowards(returnTimer, returnDuration, Time.deltaTime);
-        if (isGrabbed)
-        {
-            returnTimer = 0;
-        }
-        else if (returnTimer < returnDuration)
-        {
-            float t = returnTimer / returnDuration;
-            transform.position = Vector3.Lerp(transform.position, returnPosition, t);
-            transform.rotation = Quaternion.Lerp(transform.rotation, returnRotation, t);
-        }
+        if (!isReturning)
+            return;
+
+        returnTimer += Time.deltaTime;
+        float t = returnDuration > 0f ? Mathf.Clamp01(returnTimer / returnDuration) : 1f;
+        float eased = returnCurve.Evaluate(t);
+
+        transform.SetPositionAndRotation(
+            Vector3.LerpUnclamped(startPosition, returnPosition, eased),
+            Quaternion.SlerpUnclamped(startRotation, returnRotation, eased));
+
+        if (t >= 1f)
+            FinishReturn();
     }
 
     public void OnGrabbed()
     {
-        isGrabbed = true;
+        if (isReturning)
+            FinishReturn(snap: false); // grabbed mid-return: stop and hand control to the hand
     }
 
     public void OnReleased()
     {
-        isGrabbed = false;
+        startPosition = transform.position;
+        startRotation = transform.rotation;
+        returnTimer = 0f;
+        isReturning = true;
+
+        // Stop physics from fighting the animation while it plays.
+        if (rb != null)
+        {
+            wasKinematic = rb.isKinematic;
+            rb.isKinematic = true;
+        }
+    }
+
+    private void FinishReturn(bool snap = true)
+    {
+        isReturning = false;
+
+        if (snap)
+            transform.SetPositionAndRotation(returnPosition, returnRotation);
+
+        if (rb != null)
+            rb.isKinematic = wasKinematic;
     }
 
     public bool IsAtReturnPosition()
