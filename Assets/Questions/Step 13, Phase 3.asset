@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892c2997d17783242a28797fd887e9dc, type: 3}
   m_Name: Step 13, Phase 3
   m_EditorClassIdentifier: Assembly-CSharp::MeasurementQuestion
-  phase: 0
-  step: 0
+  phase: 3
+  step: 4
   prompt: 
   type: 0
   correctAnswer: 0
+  minimumBounds: 0
+  maximumBounds: 0
+  sliderIncrement: 0

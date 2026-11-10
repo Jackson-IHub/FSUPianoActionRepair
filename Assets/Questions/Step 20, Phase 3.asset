@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Step 20, Phase 3
   m_EditorClassIdentifier: Assembly-CSharp::MeasurementQuestion
   phase: 0
-  step: 0
+  step: 9
   prompt: 
   type: 0
   correctAnswer: 0
+  minimumBounds: 0
+  maximumBounds: 0
+  sliderIncrement: 0

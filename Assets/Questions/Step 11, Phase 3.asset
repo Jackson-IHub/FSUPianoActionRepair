@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892c2997d17783242a28797fd887e9dc, type: 3}
   m_Name: Step 11, Phase 3
   m_EditorClassIdentifier: Assembly-CSharp::MeasurementQuestion
-  phase: 0
-  step: 0
-  prompt: 
+  phase: 3
+  step: 2
+  prompt: What is the correct size of the  gap between the jack top and the hammer
+    knuckle?
   type: 0
-  correctAnswer: 0
+  correctAnswer: 0.1
+  minimumBounds: 0
+  maximumBounds: 2
+  sliderIncrement: 0.1
