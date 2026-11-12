@@ -15,6 +15,6 @@ MonoBehaviour:
   phase: 1
   step: 4
   prompt: Place the calipers where you must measure to complete step 13.
-  type: 0
+  type: 1
   correctTool: 1
   correctArea: 8

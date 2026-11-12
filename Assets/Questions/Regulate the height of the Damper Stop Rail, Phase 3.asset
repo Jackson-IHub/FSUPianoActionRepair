@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 892c2997d17783242a28797fd887e9dc, type: 3}
-  m_Name: Step 19, Phase 3
+  m_Name: Regulate the height of the Damper Stop Rail, Phase 3
   m_EditorClassIdentifier: Assembly-CSharp::MeasurementQuestion
-  phase: 0
-  step: 8
-  prompt: 
+  phase: 3
+  step: 9
+  prompt: hat is the correct gap between the underlever and the stop rail felt?
   type: 0
-  correctAnswer: 0
+  correctAnswer: 1.5
   minimumBounds: 0
-  maximumBounds: 0
-  sliderIncrement: 0
+  maximumBounds: 5
+  sliderIncrement: 0.5

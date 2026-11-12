@@ -16,6 +16,6 @@ MonoBehaviour:
   step: 4
   prompt: Grab the correct tool to check the hammer rail height, and place it in
     the correct spot.
-  type: 0
+  type: 2
   correctTool: 1
   correctArea: 8
