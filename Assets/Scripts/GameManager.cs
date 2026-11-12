@@ -1,10 +1,8 @@
 
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,11 +13,19 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Questions finalPlaceholderQuestion;
 
+    public bool currentQuestionAnsweredIncorrectly = false;
+    public Questions currentQuestion;
+
+    [SerializeField] private ToolSocketManager toolSocketManager;
+    [SerializeField] private ToolSocketManager caliperSocketManager;
+
+    [SerializeField] private ParticleSystem confettiParticles;
+
+    const float DETACH_TOOLS_AFTER = 3.0f;  // Seconds
+
     private int currentStep = 0;
     private int currentPhase = 0;
-    public bool currentQuestionAnsweredIncorrectly = false;
 
-    public Questions currentQuestion;
     private float selectedMeasurement;
 
     public UnityEvent OnCheckAnswer;
@@ -98,6 +104,16 @@ public class GameManager : MonoBehaviour
         
     }
 
+    private IEnumerator DetachTools()
+    {
+        yield return new WaitForSeconds(DETACH_TOOLS_AFTER);
+
+        // Move all tools back to toolbox
+        toolSocketManager.DetachTools();
+        caliperSocketManager.DetachTools();
+
+    }
+
     private void HandleToolInserted(Thorb thorb, SocketTool socketTool)
     {
         CheckAnswer(thorb, socketTool);
@@ -153,6 +169,13 @@ public class GameManager : MonoBehaviour
             if (correct)
             {
                 Debug.Log("Correct tool and location!");
+
+                // Display confetti
+                confettiParticles.Play();
+
+                // Move tools back
+                StartCoroutine(DetachTools());
+
                 NextQuestion();
                 currentQuestionAnsweredIncorrectly = false;
             }

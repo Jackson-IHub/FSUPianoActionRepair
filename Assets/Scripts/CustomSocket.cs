@@ -291,7 +291,7 @@ public class CustomSocket : MonoBehaviour
         if (tool == attached) Detach();
     }
 
-    void Detach()
+    public void Detach()
     {
         var tool = attached;
         if (tool == null) return;
