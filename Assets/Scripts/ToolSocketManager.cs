@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class ToolSocketIndicatorHandler : MonoBehaviour
+public class ToolSocketManager : MonoBehaviour
 {
     public enum HoldCheck
     {
@@ -22,6 +22,15 @@ public class ToolSocketIndicatorHandler : MonoBehaviour
     int colorPropertyId;
     float currentAlpha;
     bool indicatorsVisible;
+
+    public void DetachTools()
+    {
+        foreach (Transform child in transform)
+        {
+            var socket = child.gameObject.GetComponent<CustomSocket>();
+            socket.Detach();
+        }
+    }
 
     void Awake()
     {
