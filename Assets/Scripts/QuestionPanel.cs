@@ -6,7 +6,7 @@ public class QuestionPanel : MonoBehaviour
 {
     [SerializeField] private GameManager Manager;
 
-    public TextMeshProUGUI question, title;
+    public TextMeshProUGUI question, title, incorrectBox;
 
     private void Start()
     {
@@ -19,12 +19,13 @@ public class QuestionPanel : MonoBehaviour
         if (Manager.currentQuestionAnsweredIncorrectly)
         {
             title.text = Manager.currentQuestion.name;
-            question.text = "  INCORRECT: PLEASE TRY AGAIN" + Manager.currentQuestion.prompt + "  INCORRECT: PLEASE TRY AGAIN";
+            incorrectBox.text = "  INCORRECT: PLEASE TRY AGAIN";
         }
         else
         {
             title.text = Manager.currentQuestion.name;
             question.text = Manager.currentQuestion.prompt;
+            incorrectBox.text = "";
         }
     }
 

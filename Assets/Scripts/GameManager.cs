@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Questions finalPlaceholderQuestion;
 
+    [SerializeField] private GameObject finishedPanel, questionPanel;
+
     public bool currentQuestionAnsweredIncorrectly = false;
     public Questions currentQuestion;
 
@@ -75,7 +77,7 @@ public class GameManager : MonoBehaviour
 
         if (next == null)
         {
-            currentQuestion = finalPlaceholderQuestion;
+            changeToFinishedUI();
             Debug.Log("All questions completed!");
             return;
         }
@@ -213,5 +215,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartGame();   
+    }
+
+    private void changeToFinishedUI()
+    {
+        questionPanel.SetActive(false);
+        finishedPanel.SetActive(true);
     }
 }
