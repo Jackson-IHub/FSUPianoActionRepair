@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ModelQuestion
   phase: 1
   step: 1
-  prompt: Take the calipers and place them where you need to measure to complete
-    step 5 of piano regulation
+  prompt: Take the calipers and place them where you need to measure key dip.
   type: 1
   correctTool: 1
   correctArea: 1
