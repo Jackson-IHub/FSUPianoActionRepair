@@ -191,11 +191,22 @@ public class GameManager : MonoBehaviour
         {
             MeasurementQuestion question = (MeasurementQuestion)currentQuestion;
 
-            if (Mathf.Approximately(question.correctAnswer, selectedMeasurement))
+            if (question.correctAnswer == selectedMeasurement)
+            {
                 NextQuestion();
+
+                // Display confetti
+                confettiParticles.Play();
+
+                // Move tools back
+                StartCoroutine(DetachTools());
+            }
+         
             else
+            {
                 Debug.Log($"Wrong Measurement!: {selectedMeasurement}");
                 currentQuestionAnsweredIncorrectly = true;
+            }
         }
 
         OnCheckAnswer?.Invoke();
