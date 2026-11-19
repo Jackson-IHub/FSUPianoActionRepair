@@ -600,6 +600,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1544045610}
   m_SourcePrefab: {fileID: 100100000, guid: e8936261c82d8e5499ee02bacc5c71b1, type: 3}
+--- !u!114 &218545843 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6283329559392337895, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
+  m_PrefabInstance: {fileID: 1098161813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b734f2bd29eeddd4d85afb0c266228c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &225557617
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,6 +1209,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368534352}
   m_CullTransparentMesh: 1
+--- !u!1 &405858560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 405858562}
+  - component: {fileID: 405858561}
+  m_Layer: 0
+  m_Name: Haptics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &405858561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405858560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f8c8af13b5df7a4db68df3634a4e21b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HapticsManager
+  leftHand: {fileID: 872450333}
+  rightHand: {fileID: 218545843}
+  defaultHand: 2
+  hover:
+    amplitude: 0.1
+    duration: 0.03
+    frequency: 0
+  select:
+    amplitude: 0.4
+    duration: 0.06
+    frequency: 0
+  correct:
+    amplitude: 0.5
+    duration: 0.06
+    frequency: 0
+  correctGap: 0.08
+  incorrect:
+    amplitude: 0.7
+    duration: 0.25
+    frequency: 60
+  tick:
+    amplitude: 0.25
+    duration: 0.015
+    frequency: 0
+  bottomOut:
+    amplitude: 0.6
+    duration: 0.04
+    frequency: 0
+--- !u!4 &405858562
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405858560}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.37141, y: 2.565, z: 4.91204}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &409625903
 GameObject:
   m_ObjectHideFlags: 0
@@ -2893,6 +2976,7 @@ GameObject:
   - component: {fileID: 800885625}
   - component: {fileID: 800885624}
   - component: {fileID: 800885623}
+  - component: {fileID: 800885626}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -2976,6 +3060,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 405858561}
+        m_TargetAssemblyTypeName: HapticsManager, Assembly-CSharp
+        m_MethodName: PlaySelect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &800885624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3014,6 +3110,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800885621}
   m_CullTransparentMesh: 1
+--- !u!114 &800885626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800885621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405858561}
+          m_TargetAssemblyTypeName: HapticsManager, Assembly-CSharp
+          m_MethodName: PlayHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &808999850
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3201,6 +3326,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 843233146fcbb9e4593fac4861f5a1f1, type: 3}
   m_PrefabInstance: {fileID: 849261475}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &872450333 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4553217226038635835, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
+  m_PrefabInstance: {fileID: 1098161813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b734f2bd29eeddd4d85afb0c266228c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &876528697
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10205,3 +10341,4 @@ SceneRoots:
   - {fileID: 68379342}
   - {fileID: 1277790631}
   - {fileID: 1422707598}
+  - {fileID: 405858562}
