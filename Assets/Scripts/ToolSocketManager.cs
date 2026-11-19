@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngineInternal;
 
 public class ToolSocketManager : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class ToolSocketManager : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
+            Debug.Log($"Detaching tool from socket: {child.gameObject.name}");
             var socket = child.gameObject.GetComponent<CustomSocket>();
             socket.Detach();
         }

@@ -17,4 +17,4 @@ MonoBehaviour:
   prompt: Place the calipers where you need to measure after holding the key down.
   type: 1
   correctTool: 1
-  correctArea: 0
+  correctArea: 14

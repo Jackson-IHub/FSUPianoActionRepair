@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     private int currentStep = 0;
     private int currentPhase = 0;
-
+    private int questionsAnsweredIncorrectly = 0;
     private float selectedMeasurement;
 
     public UnityEvent OnCheckAnswer;
@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(DETACH_TOOLS_AFTER);
 
+        Debug.Log("Detaching tools from sockets after delay.");
         // Move all tools back to toolbox
         toolSocketManager.DetachTools();
         caliperSocketManager.DetachTools();
