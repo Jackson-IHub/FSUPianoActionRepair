@@ -1919,7 +1919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: toolDescription
-      value: tool description
+      value: Used to adjust the height of the repetition lever.
       objectReference: {fileID: 0}
     - target: {fileID: 4071078040815228807, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: toolType
@@ -3938,7 +3938,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: toolDescription
-      value: tool description
+      value: Used to loosen or tighten screws.
       objectReference: {fileID: 0}
     - target: {fileID: 4071078040815228807, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: toolType
@@ -4306,7 +4306,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 336146346909129413, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 866406836232131125, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_Enabled
@@ -4318,11 +4318,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2243020122175513880, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2243020122175513880, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 46
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2243020122175513880, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4422,7 +4422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3630594832954831854, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4750419573833148750, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4450,11 +4450,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4750419573999888530, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4750419573999888530, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 46
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4750419574750989019, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4562,7 +4562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7831294959254011492, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7917674758326848202, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4805,6 +4805,7 @@ MonoBehaviour:
   Manager: {fileID: 1415597912}
   question: {fileID: 1916033347}
   title: {fileID: 364469624}
+  incorrectBox: {fileID: 0}
 --- !u!114 &1128788067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5297,7 +5298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: toolDescription
-      value: tool description
+      value: Used to bend the backcheck wire.
       objectReference: {fileID: 0}
     - target: {fileID: 4071078040815228807, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: toolType
@@ -6199,6 +6200,8 @@ MonoBehaviour:
   measurementSlider: {fileID: 1905455358}
   measurementButton: {fileID: 800885621}
   finalPlaceholderQuestion: {fileID: 11400000, guid: 8b0593afea506bd4c99e268ac1f43daa, type: 2}
+  finishedPanel: {fileID: 0}
+  questionPanel: {fileID: 0}
   currentQuestionAnsweredIncorrectly: 0
   currentQuestion: {fileID: 0}
   toolSocketManager: {fileID: 570948909}
@@ -7537,7 +7540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: toolDescription
-      value: tool description
+      value: Used to adjust the drop screw.
       objectReference: {fileID: 0}
     - target: {fileID: 4071078040815228807, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: toolType
@@ -7720,7 +7723,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: toolDescription
-      value: tool description
+      value: Used to adjust the capstan.
       objectReference: {fileID: 0}
     - target: {fileID: 4071078040815228807, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: toolType
@@ -10017,7 +10020,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512155341531555371, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: toolDescription
-      value: tool description
+      value: Used to adjust the letoff screw.
       objectReference: {fileID: 0}
     - target: {fileID: 4071078040815228807, guid: bb77f29bf7f43ef4398facfc0e933b6b, type: 3}
       propertyPath: toolType
