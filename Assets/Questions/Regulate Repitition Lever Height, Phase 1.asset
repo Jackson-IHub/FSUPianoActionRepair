@@ -15,7 +15,7 @@ MonoBehaviour:
   phase: 1
   step: 2
   prompt: Take the calipers to the spot on the model where you check the "paper thickness"
-    gap to complete step 11 of piano regulation.
+    gap.
   type: 1
   correctTool: 1
   correctArea: 6

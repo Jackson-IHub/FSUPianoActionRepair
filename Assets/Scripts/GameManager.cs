@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Questions finalPlaceholderQuestion;
 
     [SerializeField] private GameObject finishedPanel, questionPanel;
+    [SerializeField] private TMPro.TextMeshProUGUI questionsAnsweredCorrectlyText;
 
     public bool currentQuestionAnsweredIncorrectly = false;
     public Questions currentQuestion;
@@ -27,7 +28,8 @@ public class GameManager : MonoBehaviour
 
     private int currentStep = 0;
     private int currentPhase = 0;
-    private int questionsAnsweredIncorrectly = 0;
+    private int totalQuestions = 27;
+    private int questionsAnsweredCorrectly = 27;
     private float selectedMeasurement;
 
     public UnityEvent OnCheckAnswer;
@@ -78,6 +80,7 @@ public class GameManager : MonoBehaviour
         if (next == null)
         {
             changeToFinishedUI();
+            questionsAnsweredCorrectlyText.text = $"Questions Answered Correctly: {questionsAnsweredCorrectly}/{totalQuestions}";
             Debug.Log("All questions completed!");
             return;
         }
@@ -134,7 +137,13 @@ public class GameManager : MonoBehaviour
             if (thorb == null || socketTool == null)
             {
                 Debug.LogWarning("Missing Thorb or inserted tool.");
-                currentQuestionAnsweredIncorrectly = true;
+
+                if (currentQuestionAnsweredIncorrectly == false)
+                {
+                    questionsAnsweredCorrectly--;
+                    currentQuestionAnsweredIncorrectly = true;
+                }
+
                 OnCheckAnswer?.Invoke();
                 return;
             }
@@ -144,7 +153,13 @@ public class GameManager : MonoBehaviour
             if (tool == null)
             {
                 Debug.LogError($"No Tool component found on {socketTool.name}.");
-                currentQuestionAnsweredIncorrectly = true;
+
+                if (currentQuestionAnsweredIncorrectly == false)
+                {
+                    questionsAnsweredCorrectly--;
+                    currentQuestionAnsweredIncorrectly = true;
+                }
+
                 OnCheckAnswer?.Invoke();
                 return; 
             }
@@ -185,7 +200,12 @@ public class GameManager : MonoBehaviour
             else
             {
                 Debug.Log($"Wrong answer! Tool: {actualToolType}, Location: {actualLocationID}");
-                currentQuestionAnsweredIncorrectly = true;
+                if (currentQuestionAnsweredIncorrectly == false)
+                {
+                    questionsAnsweredCorrectly--;
+                    currentQuestionAnsweredIncorrectly = true;
+                }
+
             }
         }
         else if (currentQuestion.type == QuestionTypes.questionTypes.measurementQuestion)
@@ -206,7 +226,11 @@ public class GameManager : MonoBehaviour
             else
             {
                 Debug.Log($"Wrong Measurement!: {selectedMeasurement}");
-                currentQuestionAnsweredIncorrectly = true;
+                if (currentQuestionAnsweredIncorrectly == false)
+                {
+                    questionsAnsweredCorrectly--;
+                    currentQuestionAnsweredIncorrectly = true;
+                }
             }
         }
 

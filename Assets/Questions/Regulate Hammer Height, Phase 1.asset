@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ModelQuestion
   phase: 1
   step: 3
-  prompt: Take the calipers, and place them where you need to measure to complete
-    step 12.
+  prompt: 'Place the calipers where you need to measure. '
   type: 1
   correctTool: 1
   correctArea: 12
